@@ -277,7 +277,23 @@ RewriteRule .* - [F,L]
 
 
 # If you want to use a proxy (such as prerender services), put it here.
-
+# The following is an example for prerender.cloud 
+# Mind to enable proxy, proxy_http, and ssl modules, as well as setting "SSLProxyEngine on" within, for example, a default-ssl.conf under /etc/apache/sites-enabled)
+# More Options @ https://github.com/sanfrancesco/prerendercloud-apache/blob/master/www/.htaccess
+# <IfModule mod_headers.c>
+    # RequestHeader set X-Prerender-Token "YOUR_TOKEN"
+# </IfModule>
+# <IfModule mod_rewrite.c>
+    # <IfModule mod_proxy_http.c>
+        # uncomment these 3 lines for bots only
+        # RewriteCond %{HTTP_USER_AGENT} googlebot|yahoo|bingbot|baiduspider|twitterbot|facebookexternalhit|rogerbot|linkedinbot|XING-contenttabreceiver|embedly|quora\ link\ preview|showyoubot|outbrain|pinterest|slackbot|vkShare|W3C_Validator|redditbot|Applebot|WhatsApp|flipboard|tumblr|bitlybot [NC,OR]
+        # RewriteCond %{QUERY_STRING} _escaped_fragment_
+        # Header append Vary User-Agent
+        # RewriteCond %{HTTP_USER_AGENT} !prerendercloud [NC]
+        # if END throws an error, use L instead
+        # RewriteRule ^(.*)$ http://service.prerender.cloud/%{REQUEST_SCHEME}://%{HTTP_HOST}/$1 [P,END]
+    # </IfModule>
+# </IfModule>
 
 # Delivery of the actual content 2/2
 <IfModule mod_rewrite.c>
