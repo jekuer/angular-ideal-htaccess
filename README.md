@@ -1,4 +1,4 @@
-# angular-ideal-htaccess
+# Ideal Angular Apache .htaccess
 Ideal secure and performant htaccess for running an Angular application (no SSR) on Apache. 
  
 
